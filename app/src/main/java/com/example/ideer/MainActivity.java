@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.sendBtn.setOnClickListener((v)-> {
             String question = binding.messageEditText.getText().toString().trim();
-            if(question.isEmpty()){
+            if(question.isEmpty()){ //입력값이 null일때 입력을 방지하는 부분
             }else{
                 addToChat(question,Message.SENT_BY_ME);
-                binding.messageEditText.setText("");//입력값이 null일때 입력을 방지하는 부분이 필요
+                binding.messageEditText.setText("");
                 callAPI(question);
             }
 
