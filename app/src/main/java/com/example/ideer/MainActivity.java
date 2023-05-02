@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     void addToChat(String message,String sentBy){
         runOnUiThread(new Runnable() {
             @Override
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     void addResponse(String response){
         messageList.remove(messageList.size()-1);
         addToChat(response,Message.SENT_BY_BOT);
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization","Bearer API KEY here")
+                .header("Authorization","Bearer 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")
                 .post(body)
                 .build();
 
