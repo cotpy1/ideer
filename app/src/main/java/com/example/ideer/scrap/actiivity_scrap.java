@@ -1,14 +1,16 @@
-package com.example.ideer;
+package com.example.ideer.scrap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class activity_home extends AppCompatActivity {
+import com.example.ideer.R;
+
+public class actiivity_scrap extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_actiivity_scrap);
     }
 }

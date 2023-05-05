@@ -1,4 +1,4 @@
-package com.example.ideer;
+package com.example.ideer.chat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -26,10 +26,10 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class activity_chat extends AppCompatActivity {
     private ActivityMainBinding binding; //뷰바인딩 객체 생성
     List<Message> messageList;
-    MessageAdapter  messageAdapter;
+    MessageAdapter messageAdapter;
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization","Bearer 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")
+                .header("Authorization","Bearer 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")
                 .post(body)
                 .build();
 
