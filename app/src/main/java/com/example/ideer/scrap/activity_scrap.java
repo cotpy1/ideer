@@ -1,15 +1,16 @@
-package com.example.ideer.memo;
+package com.example.ideer.scrap;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 import com.example.ideer.R;
 
-public class activity_memo extends AppCompatActivity {
+public class activity_scrap extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_memo);
+        setContentView(R.layout.actiivity_scrap);
     }
 }

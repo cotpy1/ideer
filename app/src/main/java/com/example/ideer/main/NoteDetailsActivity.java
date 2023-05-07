@@ -1,4 +1,4 @@
-package com.example.ideer.scrap;
+package com.example.ideer.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.ideer.R;
 
-public class actiivity_scrap extends AppCompatActivity {
+public class NoteDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actiivity_scrap);
+        setContentView(R.layout.activity_main);
     }
 }

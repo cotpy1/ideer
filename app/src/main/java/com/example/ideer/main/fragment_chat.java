@@ -1,13 +1,19 @@
-package com.example.ideer.chat;
+package com.example.ideer.main;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.ideer.databinding.ActivityMainBinding;
+import com.example.ideer.R;
+import com.example.ideer.databinding.FragmentChatBinding;
+import com.example.ideer.main.Message;
+import com.example.ideer.main.MessageAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,50 +32,45 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class activity_chat extends AppCompatActivity {
-    private ActivityMainBinding binding; //뷰바인딩 객체 생성
-    List<Message> messageList;
-    MessageAdapter messageAdapter;
+public class fragment_chat extends Fragment {
+    private FragmentChatBinding binding;
+    private List<Message> messageList;
+    private MessageAdapter messageAdapter;
 
-    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
+    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding =  ActivityMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot(); //바인딩한 객체를 view에 할당
-        setContentView(view);
-        messageList = new ArrayList<>();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        binding = FragmentChatBinding.inflate(inflater, container, false);
+        messageList = new ArrayList<>();
         messageAdapter = new MessageAdapter(messageList);
         binding.recyclerView.setAdapter(messageAdapter);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        LinearLayoutManager llm = new LinearLayoutManager(requireActivity());
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
-
-        binding.sendBtn.setOnClickListener((v)-> {
+        binding.sendBtn.setOnClickListener((v) -> {
             String question = binding.messageEditText.getText().toString().trim();
-            if(question.isEmpty()){ //입력값이 null일때 입력을 방지하는 부분
-            }else{
-                addToChat(question,Message.SENT_BY_ME);
-                binding.messageEditText.setText("");
-                callAPI(question);
+            if (question.isEmpty()) {
+                return;
             }
-
+            addToChat(question, Message.SENT_BY_ME);
+            binding.messageEditText.setText("");
+            callAPI(question);
         });
+        return binding.getRoot();
     }
 
+    private void addToChat(String message, String sentBy) {
 
-
-    void addToChat(String message,String sentBy){
-        runOnUiThread(new Runnable() {
+        requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                messageList.add(new Message(message,sentBy));
+                messageList.add(new Message(message, sentBy));
                 messageAdapter.notifyDataSetChanged();
                 binding.recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
-
             }
         });
     }
@@ -99,7 +100,7 @@ public class activity_chat extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization","Bearer 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")
+                .header("Authorization","Bearer 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")
                 .post(body)
                 .build();
 
@@ -131,4 +132,7 @@ public class activity_chat extends AppCompatActivity {
             }
         });
     }
+
+
+
 }

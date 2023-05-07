@@ -1,4 +1,4 @@
-package com.example.ideer.chat;
+package com.example.ideer.main;
 
 import android.view.LayoutInflater;
 import android.view.View;

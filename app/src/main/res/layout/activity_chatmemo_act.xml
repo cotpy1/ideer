@@ -12,23 +12,6 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-      <androidx.appcompat.widget.Toolbar
-          android:id="@+id/toolbar"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="?colorPrimaryDark"
-          android:elevation="1dp"
-          android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IDEER"
-            android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title" />
-
-      </androidx.appcompat.widget.Toolbar>
-
       <com.google.android.material.tabs.TabLayout
           android:id="@+id/tabs"
           android:layout_width="match_parent"

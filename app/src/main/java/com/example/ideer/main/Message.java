@@ -1,4 +1,4 @@
-package com.example.ideer.chat;
+package com.example.ideer.main;
 
 public class Message {
     public static String SENT_BY_ME = "me";
