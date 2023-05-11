@@ -11,6 +11,6 @@ public class activity_scrap extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actiivity_scrap);
+        setContentView(R.layout.activity_scrap);
     }
 }

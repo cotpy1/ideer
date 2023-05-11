@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/scrap"
+        android:title="스크랩 페이지"
+        />
+    <item
+        android:id="@+id/controller_up"
+        android:title="난이도 상승"/>
+    <item
+        android:id="@+id/controller_down"
+        android:title="난이도 하락"/>
+    <item
+        android:id="@+id/refresh"
+        android:title="새로운 답변 생성"/>
+
+</menu>

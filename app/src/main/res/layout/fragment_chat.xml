@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".main.main">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler_view"
-        android:layout_above="@+id/bottom_layout"
-        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -26,6 +20,7 @@
             android:hint="요청사항을 적어주세요"
             android:padding="16dp"
             android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/my_primary"
             />
 
         <ImageButton
@@ -40,5 +35,12 @@
             android:src="@drawable/baseline_send_24" />
 
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"
+        android:layout_above="@id/bottom_layout"
+        />
 
 </RelativeLayout>

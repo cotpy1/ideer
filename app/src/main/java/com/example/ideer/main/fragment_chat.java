@@ -1,19 +1,25 @@
 package com.example.ideer.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ideer.R;
 import com.example.ideer.databinding.FragmentChatBinding;
 import com.example.ideer.main.Message;
 import com.example.ideer.main.MessageAdapter;
+import com.example.ideer.scrap.activity_scrap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,16 +42,17 @@ public class fragment_chat extends Fragment {
     private FragmentChatBinding binding;
     private List<Message> messageList;
     private MessageAdapter messageAdapter;
-
+    activity_scrap activity_scrap = new activity_scrap();
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
-
+    private ChatViewModel chatViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        setHasOptionsMenu(true);
         binding = FragmentChatBinding.inflate(inflater, container, false);
-        messageList = new ArrayList<>();
+        chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+        messageList = chatViewModel.getMessageList(); //messageList는 한번만 초기화되어야 한다
         messageAdapter = new MessageAdapter(messageList);
         binding.recyclerView.setAdapter(messageAdapter);
         LinearLayoutManager llm = new LinearLayoutManager(requireActivity());
@@ -62,18 +69,37 @@ public class fragment_chat extends Fragment {
         });
         return binding.getRoot();
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.scrap) {
+            Intent intent = new Intent(getActivity(), activity_scrap.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void addToChat(String message, String sentBy) {
-
         requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                messageList.add(new Message(message, sentBy));
+                chatViewModel.addMessage(new Message(message, sentBy));
                 messageAdapter.notifyDataSetChanged();
                 binding.recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
             }
         });
     }
+
+
 
     void addResponse(String response){
         messageList.remove(messageList.size()-1);
@@ -100,7 +126,7 @@ public class fragment_chat extends Fragment {
         RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization","Bearer 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")
+                .header("Authorization","Bearer API KEY")
                 .post(body)
                 .build();
 
