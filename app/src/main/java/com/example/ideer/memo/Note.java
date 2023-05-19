@@ -1,4 +1,4 @@
-package com.example.ideer.main;
+package com.example.ideer.memo;
 
 import com.google.firebase.Timestamp;
 

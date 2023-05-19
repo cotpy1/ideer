@@ -1,23 +1,21 @@
-package com.example.ideer.main;
+package com.example.ideer.memo;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.ideer.R;
 import com.example.ideer.databinding.FragmentMemoBinding;
+import com.example.ideer.memo.Note;
+import com.example.ideer.memo.NoteAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.Query;
-import com.example.ideer.main.NoteDetailsActivity;
+import com.example.ideer.memo.NoteDetailsActivity;
 
 public class fragment_memo extends Fragment {
 

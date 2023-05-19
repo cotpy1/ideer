@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/scrap"
-        android:title="스크랩 페이지"
+        android:title="스크랩 하기"
         />
+    <item
+        android:id="@+id/scrap_page"
+        android:title="스크랩 및 메모 페이지"/>
     <item
         android:id="@+id/controller_up"
         android:title="난이도 상승"/>

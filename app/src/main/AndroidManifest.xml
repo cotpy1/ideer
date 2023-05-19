@@ -14,11 +14,6 @@
         android:theme="@style/Theme.Ideer"
         tools:targetApi="31">
         <activity
-            android:name=".home.ChooseTopicActivity"
-            android:exported="false"
-            android:label="@string/title_activity_choose_topic"
-            android:theme="@style/Theme.Ideer.NoActionBar" />
-        <activity
             android:name=".main.NoteDetailsActivity"
             android:exported="false" />
         <activity
@@ -27,6 +22,7 @@
         <activity
             android:name=".main.main"
             android:exported="false" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
