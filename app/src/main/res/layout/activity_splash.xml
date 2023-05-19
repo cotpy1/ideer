@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ideer_main" />
+        android:src="@drawable/ideer_main" />
 
     <TextView
         android:id="@+id/vibe_post_title_tv"
