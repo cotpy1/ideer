@@ -1,27 +1,43 @@
 package com.example.ideer.home
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ideer.R
-import com.example.ideer.databinding.ActivityChooseTopicBinding
+
 
 class ChooseTopicActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityChooseTopicBinding
+    private var recyclerView: RecyclerView? = null
+    private var gridLayoutManager: GridLayoutManager? = null
+    private var arrayList: ArrayList<String>? = null
+    private var ChooseTopicAdapters: ChooseTopicAdapter? = null
 
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_choose_topic)
 
-        binding = ActivityChooseTopicBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        recyclerView = findViewById(R.id.ChooseTopicrecyclerGridView)
+        gridLayoutManager = GridLayoutManager(applicationContext, 3,
+                LinearLayoutManager.VERTICAL, false)
+        recyclerView?.layoutManager = gridLayoutManager
+        recyclerView?.setHasFixedSize(true)
+        arrayList = ArrayList()
+        ChooseTopicAdapters = ChooseTopicAdapter(applicationContext, arrayList!!)
+        recyclerView?.adapter = ChooseTopicAdapters
 
 
 
-
+        // Populate the arrayList with dummy data
+        val dummyData = listOf("건강 · 운동","게임","교육","데이트","생산성","비지니스","여행·지역정보","음악·오디오","사진","식음료","직접 입력","랜덤")
+        arrayList!!.addAll(dummyData)
+        ChooseTopicAdapters!!.notifyDataSetChanged()
     }
-
 }
