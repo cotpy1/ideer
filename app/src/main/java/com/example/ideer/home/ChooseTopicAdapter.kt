@@ -35,7 +35,9 @@ class ChooseTopicAdapter(private val context: Context, private val arrayList: Ar
         holder.topicValueText.text = topicValue
         holder.topicValueText.gravity=Gravity.CENTER
         holder.itemView.setOnClickListener {
-            Log.d("RecyclerView", "Item at position $position clicked: ${arrayList[position]}")
+            val intent = Intent(it.context, DevLevelChoose::class.java)
+            intent.putExtra("topic", arrayList[position])
+            it.context.startActivity(intent)
         }
 
     }

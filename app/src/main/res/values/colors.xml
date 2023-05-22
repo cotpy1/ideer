@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="my_primary">#FEF5ED</color>
     <color name="action_bar">#D3E4CD</color>
+    <color name="high">#99A799</color>
+    <color name="mid">#ADC2A9</color>
+    <color name="low">#D3E4CD</color>
+    <color name="main_theme">#FEF5ED</color>
 </resources>
