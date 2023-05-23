@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -61,7 +63,6 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = FirebaseFirestore.getInstance();
 
@@ -81,6 +82,9 @@ public class ChatActivity extends AppCompatActivity {
             binding.messageEditText.setText("");
             callAPI(question);
         });
+        binding.startMenuBtn.setOnClickListener((v) ->{
+            showMenuOptions();
+        } );
         Intent intent = getIntent();
         if (intent != null) {
             String initialQuestion = intent.getStringExtra("question");
@@ -97,49 +101,82 @@ public class ChatActivity extends AppCompatActivity {
         return true;
     }
     private String getCurrentQuestion() {
-        return previousQuestion;
+        if (previousQuestion != null) {
+            return previousQuestion;
+        } else {
+            return "";
+        }
     }
+
+
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.scrap_page) {
-            Intent intent = new Intent(this, main.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.scrap) {
-            scrapChatConversation();
-            return true;
-        } else if (id == R.id.refresh){
-            String question = getCurrentQuestion(); // 이전 질문 가져오기
-            addToChat(question, Message.SENT_BY_ME); // 새로운 질문을 대화에 추가
-            callAPI(question); // 새로운 질문에 대한 API 호출
-            return true;
-        } else if (id == R.id.difficulty_down) {
-            if (!previousQuestion.isEmpty()) {
-                previousDifficultyLevel--;
-                requestLowerDifficultyQuestion();
-            } else {
-                Toast.makeText(this, "이전 질문이 없습니다.", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        } else if (id == R.id.difficulty_up) {
-            if (!previousQuestion.isEmpty()) {
-                previousDifficultyLevel++;
-                requestHigherDifficultyQuestion();
-            } else {
-                Toast.makeText(this, "이전 질문이 없습니다.", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        } else if (id == android.R.id.home) {
-            onBackPressed();
+        if (id == R.id.start_menu_btn) {
+            // 메뉴 버튼 클릭 시 동작 수행
+            showMenuOptions(); // 메뉴 항목 표시 작업 수행
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void showMenuOptions() {
+        // 메뉴 항목을 표시하는 작업 수행
+        PopupMenu popupMenu = new PopupMenu(this, binding.startMenuBtn);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_fragment, popupMenu.getMenu()); // 수정된 메뉴 리소스 사용
+
+        // 메뉴 항목 클릭 이벤트 처리
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.scrap_page) {
+                    // 스크랩 페이지로 이동하는 작업 수행
+                    Intent intent = new Intent(ChatActivity.this, main.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.scrap) {
+                    // 채팅 대화 스크랩하는 작업 수행
+                    scrapChatConversation();
+                    return true;
+                } else if (id == R.id.refresh) {
+                    // 채팅 대화 내용을 갱신하는 작업 수행
+                    String question = getCurrentQuestion();
+                    addToChat(question, Message.SENT_BY_ME);
+                    callAPI(question);
+                    return true;
+                } else if (id == R.id.difficulty_down) {
+                    // 난이도를 낮추는 작업 수행
+                    if (!previousQuestion.isEmpty()) {
+                        previousDifficultyLevel--;
+                        requestLowerDifficultyQuestion();
+                    } else {
+                        showToast("이전 질문이 없습니다.");
+                    }
+                    return true;
+                } else if (id == R.id.difficulty_up) {
+                    // 난이도를 높이는 작업 수행
+                    if (!previousQuestion.isEmpty()) {
+                        previousDifficultyLevel++;
+                        requestHigherDifficultyQuestion();
+                    } else {
+                        showToast("이전 질문이 없습니다.");
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        popupMenu.show();
+    }
+
     private void requestHigherDifficultyQuestion() {
         String question = getCurrentQuestion(); // 이전 질문 가져오기
         String newQuestion = " 더 어려운"+question;

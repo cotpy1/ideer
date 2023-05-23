@@ -13,15 +13,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/title_bar_layout">
 
-        <ImageButton
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:id="@+id/menu_btn"
-            android:src="@drawable/baseline_menu_24"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            app:tint="@color/my_primary"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
     </RelativeLayout>
     
     <androidx.recyclerview.widget.RecyclerView

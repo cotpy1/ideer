@@ -13,4 +13,5 @@
     <color name="mid">#ADC2A9</color>
     <color name="low">#D3E4CD</color>
     <color name="main_theme">#FEF5ED</color>
+    <color name="tab">#D3E4CD</color>
 </resources>

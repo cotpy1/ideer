@@ -26,7 +26,7 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(view);
 
 
-        binding.arrowMoveBackward.setOnClickListener(new View.OnClickListener() {
+        binding.startBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish(); // 이전 페이지로 돌아가기

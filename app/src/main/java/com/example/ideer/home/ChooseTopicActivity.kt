@@ -35,6 +35,7 @@ class ChooseTopicActivity : AppCompatActivity() {
 
 
 
+
         // Populate the arrayList with dummy data
         val dummyData = listOf("건강 · 운동","게임","교육","데이트","생산성","비지니스","여행·지역정보","음악·오디오","사진","식음료","직접 입력","랜덤")
         arrayList!!.addAll(dummyData)

@@ -1,7 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".main.main">
 
   <androidx.coordinatorlayout.widget.CoordinatorLayout
       android:layout_width="match_parent"
@@ -10,7 +13,38 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/Theme.Ideer">
+
+      <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/tab"
+          android:elevation="1dp"
+          android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="메모 및 스크랩"
+            android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+
+      </androidx.appcompat.widget.Toolbar>
+
+      <com.google.android.material.tabs.TabLayout
+          android:id="@+id/tabs"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:elevation="1dp"
+          app:tabGravity="fill"
+          app:tabMode="fixed"
+          app:tabSelectedTextColor="?colorAccent"
+          app:tabTextColor="?colorPrimary" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
@@ -19,16 +53,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-      <com.google.android.material.tabs.TabLayout
-          android:id="@+id/tabs"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@android:color/background_light"
-          android:elevation="1dp"
-          app:tabGravity="fill"
-          app:tabMode="fixed"
-          app:tabSelectedTextColor="?colorAccent"
-          app:tabTextColor="?colorPrimary" />
     </FrameLayout>
 
   </androidx.coordinatorlayout.widget.CoordinatorLayout>

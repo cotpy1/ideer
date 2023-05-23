@@ -22,7 +22,12 @@
             android:exported="false"/>
         <activity android:name=".home.ChooseTopicActivity"
             android:exported="false"/>
-
+        <activity android:name=".memo.NoteDetailsActivity"
+            android:exported="false"/>
+        <activity android:name=".questionlist.QuestionActivity"
+            android:exported="false"/>
+        <activity android:name=".scrap.ScrapDetailsActivity"
+            android:exported="false"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"
