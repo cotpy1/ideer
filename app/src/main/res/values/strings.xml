@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ideer</string>
+    <string name="dev_level"><![CDATA[개발 인원 & 수준]]></string>
 </resources>
