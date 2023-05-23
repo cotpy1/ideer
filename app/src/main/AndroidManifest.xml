@@ -13,18 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ideer"
         tools:targetApi="31">
-        <activity
-            android:name=".home.DevLevelChoose"
-            android:exported="false" />
+
         <activity
             android:name=".main.main"
             android:exported="false" />
         <activity
             android:name=".chat.ChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".home.ChooseTopicActivity"
-            android:exported="false" />
+            android:exported="false"/>
+        <activity android:name=".home.ChooseTopicActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"

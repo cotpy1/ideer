@@ -9,10 +9,10 @@
         android:id="@+id/scrap_page"
         android:title="스크랩 및 메모 페이지"/>
     <item
-        android:id="@+id/controller_up"
+        android:id="@+id/difficulty_up"
         android:title="난이도 상승"/>
     <item
-        android:id="@+id/controller_down"
+        android:id="@+id/difficulty_down"
         android:title="난이도 하락"/>
     <item
         android:id="@+id/refresh"

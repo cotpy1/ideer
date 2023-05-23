@@ -51,6 +51,8 @@ public class ChatActivity extends AppCompatActivity {
     // ChatActivity 내부
 
     private FirebaseFirestore db;
+    private String previousQuestion = "";
+    private int previousDifficultyLevel = 0;
 
 
 
@@ -79,6 +81,14 @@ public class ChatActivity extends AppCompatActivity {
             binding.messageEditText.setText("");
             callAPI(question);
         });
+        Intent intent = getIntent();
+        if (intent != null) {
+            String initialQuestion = intent.getStringExtra("question");
+            if (initialQuestion != null && !initialQuestion.isEmpty()) {
+                addToChat(initialQuestion, Message.SENT_BY_ME);
+                callAPI(initialQuestion);
+            }
+        }
     }
 
     @Override
@@ -86,6 +96,10 @@ public class ChatActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_fragment, menu);
         return true;
     }
+    private String getCurrentQuestion() {
+        return previousQuestion;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -98,6 +112,27 @@ public class ChatActivity extends AppCompatActivity {
         } else if (id == R.id.scrap) {
             scrapChatConversation();
             return true;
+        } else if (id == R.id.refresh){
+            String question = getCurrentQuestion(); // 이전 질문 가져오기
+            addToChat(question, Message.SENT_BY_ME); // 새로운 질문을 대화에 추가
+            callAPI(question); // 새로운 질문에 대한 API 호출
+            return true;
+        } else if (id == R.id.difficulty_down) {
+            if (!previousQuestion.isEmpty()) {
+                previousDifficultyLevel--;
+                requestLowerDifficultyQuestion();
+            } else {
+                Toast.makeText(this, "이전 질문이 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        } else if (id == R.id.difficulty_up) {
+            if (!previousQuestion.isEmpty()) {
+                previousDifficultyLevel++;
+                requestHigherDifficultyQuestion();
+            } else {
+                Toast.makeText(this, "이전 질문이 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+            return true;
         } else if (id == android.R.id.home) {
             onBackPressed();
             return true;
@@ -105,6 +140,20 @@ public class ChatActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    private void requestHigherDifficultyQuestion() {
+        String question = getCurrentQuestion(); // 이전 질문 가져오기
+        String newQuestion = " 더 어려운"+question;
+        addToChat(newQuestion, Message.SENT_BY_ME); // 새로운 질문을 대화에 추가
+        callAPI(newQuestion); // 새로운 질문에 대한 API 호출
+    }
+    private void requestLowerDifficultyQuestion() {
+        String question = getCurrentQuestion(); // 이전 질문 가져오기
+        String newQuestion = "더 쉬운"+question;
+        addToChat(newQuestion, Message.SENT_BY_ME); // 새로운 질문을 대화에 추가
+        callAPI(newQuestion); // 새로운 질문에 대한 API 호출
+    }
+
+
 
     private void scrapChatConversation() {
         String conversationText = convertChatConversationToText();
@@ -116,14 +165,12 @@ public class ChatActivity extends AppCompatActivity {
                 .add(data)
                 .addOnSuccessListener(documentReference -> {
                     String scrapId = documentReference.getId();
-
-                    // Create a new instance of the fragment_scrap fragment
                     Fragment fragment = new fragment_scrap();
                     Bundle bundle = new Bundle();
                     bundle.putString("scrapId", scrapId);
                     fragment.setArguments(bundle);
 
-
+                    //프래그먼트 호출 및 전환
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(android.R.id.content, fragment);
                     fragmentTransaction.commit();
@@ -162,6 +209,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
     private void addToChat(String message, String sentBy) {
         runOnUiThread(new Runnable() {
             @Override
@@ -185,6 +233,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void callAPI(String question){
+        previousQuestion = question;
+
         //okhttp
         messageList.add(new Message("입력중..",Message.SENT_BY_BOT));
 
@@ -207,7 +257,7 @@ public class ChatActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization","Bearer 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")
+                .header("Authorization","Bearer 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")
                 .post(body)
                 .build();
 
