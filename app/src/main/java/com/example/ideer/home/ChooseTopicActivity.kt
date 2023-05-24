@@ -3,13 +3,13 @@ package com.example.ideer.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ideer.R
+import com.example.ideer.SelectedData
+import com.example.ideer.databinding.ActivityChooseTopicBinding
 
 
 class ChooseTopicActivity : AppCompatActivity() {
@@ -17,12 +17,16 @@ class ChooseTopicActivity : AppCompatActivity() {
     private var gridLayoutManager: GridLayoutManager? = null
     private var arrayList: ArrayList<String>? = null
     private var ChooseTopicAdapters: ChooseTopicAdapter? = null
+    private lateinit var binding: ActivityChooseTopicBinding
+    var chosenTopic = "선택된 토픽"
+    var selectedData = SelectedData(chosenTopic, "", "")
 
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose_topic)
+        binding = ActivityChooseTopicBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         recyclerView = findViewById(R.id.ChooseTopicrecyclerGridView)
         gridLayoutManager = GridLayoutManager(applicationContext, 3,
@@ -32,7 +36,14 @@ class ChooseTopicActivity : AppCompatActivity() {
         arrayList = ArrayList()
         ChooseTopicAdapters = ChooseTopicAdapter(applicationContext, arrayList!!)
         recyclerView?.adapter = ChooseTopicAdapters
-
+        binding.startBackBtnTopic.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        binding.arrowMoveForwardTopic.setOnClickListener {
+            val intent = Intent(this, DevLevelChoose::class.java)
+            startActivity(intent)
+        }
 
 
 

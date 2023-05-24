@@ -20,46 +20,41 @@
         tools:layout_editor_absoluteX="-16dp">
 
         <ImageButton
-            android:id="@+id/start_back_btn"
+            android:id="@+id/start_back_btn_dev_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@null"
+            android:background="@color/my_primary"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/notice_ico"
+            android:src="@drawable/baseline_arrow_back_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <TextView
-            android:id="@+id/vibe_post_title_tv"
+            android:id="@+id/title_name_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dev_level"
+            android:text="개발 인원 &amp; 수준"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageButton
-            android:id="@+id/start_menu_btn"
-            android:layout_width="38dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="320dp"
-            android:background="@null"
+            android:id="@+id/arrow_move_forward_dev_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/my_primary"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/menu_ico"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.509" />
+            android:src="@drawable/baseline_arrow_forward_24"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/vibe_post_top_bar_layout"
+            app:layout_constraintTop_toTopOf="@id/vibe_post_top_bar_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

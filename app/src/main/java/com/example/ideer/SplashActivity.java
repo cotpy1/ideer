@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.ideer.chat.ChatActivity;
-import com.example.ideer.home.MainActivity;
 import com.example.ideer.main.main;
+import com.example.ideer.home.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
 

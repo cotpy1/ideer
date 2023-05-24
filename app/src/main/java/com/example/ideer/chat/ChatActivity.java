@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ideer.R;
+import com.example.ideer.SelectedData;
 import com.example.ideer.databinding.ActivityChatBinding;
 import com.example.ideer.main.main;
 import com.example.ideer.scrap.fragment_scrap;
@@ -55,6 +56,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String previousQuestion = "";
     private int previousDifficultyLevel = 0;
+    private SelectedData selectedData;
 
 
 
@@ -65,6 +67,13 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         db = FirebaseFirestore.getInstance();
+        // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
+        selectedData = getIntent().getParcelableExtra("selectedData");
+
+        // 선택된 정보 사용 예시
+        String chosenTopic = selectedData.getChosenTopic();
+        String chosenLevel = selectedData.getChosenLevel();
+        String chosenQuestion = selectedData.getChosenQuestion();
 
         chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
         messageList = chatViewModel.getMessageList();
@@ -294,7 +303,7 @@ public class ChatActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(),JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization","Bearer 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")
+                .header("Authorization","Bearer api key")
                 .post(body)
                 .build();
 
