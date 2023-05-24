@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "896452285470",
+    "project_id": "ideer-25f19",
+    "storage_bucket": "ideer-25f19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896452285470:android:83aeaaba0123259f3bca0f",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896452285470-pctm2h9gohpacve5v8neoml1dfukkl9d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTQlvY1dBO0cdkthiFQ39SCsF9Ybne3ik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896452285470-pctm2h9gohpacve5v8neoml1dfukkl9d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
