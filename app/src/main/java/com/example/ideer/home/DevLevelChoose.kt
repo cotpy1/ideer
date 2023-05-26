@@ -13,10 +13,22 @@ import com.example.ideer.questionlist.QuestionActivity
 class DevLevelChoose : AppCompatActivity() {
     private lateinit var binding: ActivityDevLevelChooseBinding
     private var selectedData: SelectedData? = null
+
+    //여기서 우성원이 한것
+    var intentedTopic:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDevLevelChooseBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+
+        //intent 가져오기
+        intentedTopic=intent.extras!!.getString("topic")
+        //여기까지는 topic만 받아온것임
+
+
         // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
         // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
         selectedData = intent.getParcelableExtra("selectedData")
@@ -48,8 +60,20 @@ class DevLevelChoose : AppCompatActivity() {
         }
         binding.arrowMoveForwardDevLevel.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
+            intent.putExtra("person1",binding.person1.text)
+            intent.putExtra("person2",binding.person2.text)
+            intent.putExtra("person3",binding.person3.text)
+            intent.putExtra("person4",binding.person4.text)
+            intent.putExtra("person5",binding.person5.text)
             startActivity(intent)
+
         }
+
+        //뒤로가기 버튼일땐 intent로 넘기는것보단 그냥 현재 activity를 finsih 하는것 추천ㅎㅎ
+        //왜냐하면 이렇게하면 새로운 엑티비티가 실행되는것이지 이전 엑티비티로 돌아가는것이 아님.엑티비티가 여러 분기로 나뉘어버림
+//        binding.startBackBtnDevLevel.setOnClickListener {
+//            super.finish()
+//        }
 
         for (buttonSet in buttonSets) {
             val buttons = buttonSet.map { findViewById<Button>(it) }
