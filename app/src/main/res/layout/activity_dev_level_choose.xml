@@ -7,6 +7,8 @@
     tools:context=".home.DevLevelChoose">
 
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vibe_post_top_bar_layout"
         android:layout_width="match_parent"
@@ -59,7 +61,29 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Number of developers selection -->
 
+
+    <TextView
+        android:layout_width="54dp"
+        android:layout_height="21dp"
+        android:text="개발인원"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/personcount"
+        app:layout_constraintEnd_toEndOf="@+id/personcount"
+        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintStart_toStartOf="@+id/personcount" />
+
+    <EditText
+        android:id="@+id/personcount"
+        android:layout_width="235dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vibe_post_top_bar_layout" />
 
     <EditText
         android:id="@+id/person1"

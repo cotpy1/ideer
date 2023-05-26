@@ -14,7 +14,10 @@ class DevLevelChoose : AppCompatActivity() {
     private lateinit var binding: ActivityDevLevelChooseBinding
     private var selectedData: SelectedData? = null
 
-    //여기서 우성원이 한것
+    // 버튼 상태 추적
+    val personButtonStates = mutableMapOf<String, String>()
+
+
     var intentedTopic:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,19 +32,21 @@ class DevLevelChoose : AppCompatActivity() {
         //여기까지는 topic만 받아온것임
 
 
+
+
         // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
         // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
-        selectedData = intent.getParcelableExtra("selectedData")
-
-        // 선택된 레벨을 변수에 저장
-
-        // 선택된 레벨을 변수에 저장
-        val chosenLevel = "선택된 레벨"
-
-        // 선택된 레벨을 SelectedData 객체에 저장
-
-        // 선택된 레벨을 SelectedData 객체에 저장
-        selectedData!!.chosenLevel = chosenLevel
+//        selectedData = intent.getParcelableExtra("selectedData")
+//
+//        // 선택된 레벨을 변수에 저장
+//
+//        // 선택된 레벨을 변수에 저장
+//        val chosenLevel = "선택된 레벨"
+//
+//        // 선택된 레벨을 SelectedData 객체에 저장
+//
+//        // 선택된 레벨을 SelectedData 객체에 저장
+//        selectedData!!.chosenLevel = chosenLevel
 
 
         val topic = intent.getStringExtra("topic") // Get the topic string from the Intent
@@ -60,11 +65,20 @@ class DevLevelChoose : AppCompatActivity() {
         }
         binding.arrowMoveForwardDevLevel.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
+
+            intent.putExtra("choosentopic",intentedTopic)
+
             intent.putExtra("person1",binding.person1.text)
             intent.putExtra("person2",binding.person2.text)
             intent.putExtra("person3",binding.person3.text)
             intent.putExtra("person4",binding.person4.text)
             intent.putExtra("person5",binding.person5.text)
+
+            // 각 person의 버튼 상태를 intent에 추가
+            for ((person, buttonState) in personButtonStates) {
+                intent.putExtra("${person}ButtonState", buttonState)
+            }
+            //이제 다음화면에서 위 값들을 intent로 받아서 객체생성하면됨
             startActivity(intent)
 
         }
@@ -75,14 +89,21 @@ class DevLevelChoose : AppCompatActivity() {
 //            super.finish()
 //        }
 
-        for (buttonSet in buttonSets) {
+
+
+// 각 버튼 세트에 대해
+        for ((personIndex, buttonSet) in buttonSets.withIndex()) {
             val buttons = buttonSet.map { findViewById<Button>(it) }
             for (button in buttons) {
                 button.setOnClickListener {
-                    it.isSelected = true // Set the clicked button to the selected state
-                    for (otherButton in buttons - it) { // Iterate over the other buttons
-                        otherButton.isSelected = false // Set the other buttons to the unselected state
+                    it.isSelected = true
+                    for (otherButton in buttons - it) {
+                        otherButton.isSelected = false
                     }
+
+                    // person의 버튼 상태를 저장
+                    val person = "person${personIndex + 1}"
+                    personButtonStates[person] = it.id.toString()
                 }
             }
         }
