@@ -64,24 +64,14 @@
     <!-- Number of developers selection -->
 
 
-    <TextView
-        android:layout_width="54dp"
-        android:layout_height="21dp"
-        android:text="개발인원"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/personcount"
-        app:layout_constraintEnd_toEndOf="@+id/personcount"
-        app:layout_constraintHorizontal_bias="0.071"
-        app:layout_constraintStart_toStartOf="@+id/personcount" />
-
     <EditText
         android:id="@+id/personcount"
-        android:layout_width="235dp"
-        android:layout_height="40dp"
+        android:layout_width="185dp"
+        android:layout_height="36dp"
         android:layout_marginTop="48dp"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vibe_post_top_bar_layout" />
 
@@ -105,7 +95,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vibe_post_top_bar_layout" />
 
-    <Button
+    <ImageButton
         android:id="@+id/mid_button1"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -114,7 +104,7 @@
         app:layout_constraintStart_toEndOf="@id/low_button1"
         app:layout_constraintTop_toTopOf="@id/person1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/low_button1"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -124,12 +114,11 @@
         app:layout_constraintStart_toEndOf="@id/person1"
         app:layout_constraintTop_toTopOf="@id/person1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/high_button1"
         android:layout_width="50dp"
         android:layout_height="43dp"
         android:background="@drawable/level_button_high_selector"
-
         app:layout_constraintStart_toEndOf="@id/mid_button1"
         app:layout_constraintTop_toTopOf="@id/person1" />
 
@@ -154,7 +143,7 @@
         app:layout_constraintStart_toEndOf="@+id/icoperson2"
         app:layout_constraintTop_toTopOf="@+id/icoperson2" />
 
-    <Button
+    <ImageButton
         android:id="@+id/low_button2"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -163,7 +152,7 @@
         app:layout_constraintStart_toEndOf="@+id/person2"
         app:layout_constraintTop_toTopOf="@+id/person2" />
 
-    <Button
+    <ImageButton
         android:id="@+id/mid_button2"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -171,7 +160,7 @@
         app:layout_constraintStart_toEndOf="@+id/low_button2"
         app:layout_constraintTop_toTopOf="@+id/person2" />
 
-    <Button
+    <ImageButton
         android:id="@+id/high_button2"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -200,7 +189,7 @@
         app:layout_constraintStart_toEndOf="@+id/icoperson3"
         app:layout_constraintTop_toTopOf="@+id/icoperson3" />
 
-    <Button
+    <ImageButton
         android:id="@+id/low_button3"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -209,7 +198,7 @@
         app:layout_constraintStart_toEndOf="@+id/person3"
         app:layout_constraintTop_toTopOf="@+id/person3" />
 
-    <Button
+    <ImageButton
         android:id="@+id/mid_button3"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -217,7 +206,7 @@
         app:layout_constraintStart_toEndOf="@+id/low_button3"
         app:layout_constraintTop_toTopOf="@+id/person3" />
 
-    <Button
+    <ImageButton
         android:id="@+id/high_button3"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -246,7 +235,7 @@
         app:layout_constraintStart_toEndOf="@+id/icoperson4"
         app:layout_constraintTop_toTopOf="@+id/icoperson4" />
 
-    <Button
+    <ImageButton
         android:id="@+id/low_button4"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -255,7 +244,7 @@
         app:layout_constraintStart_toEndOf="@+id/person4"
         app:layout_constraintTop_toTopOf="@+id/person4" />
 
-    <Button
+    <ImageButton
         android:id="@+id/mid_button4"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -263,7 +252,7 @@
         app:layout_constraintStart_toEndOf="@+id/low_button4"
         app:layout_constraintTop_toTopOf="@+id/person4" />
 
-    <Button
+    <ImageButton
         android:id="@+id/high_button4"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -292,7 +281,7 @@
         app:layout_constraintStart_toEndOf="@+id/icoperson5"
         app:layout_constraintTop_toTopOf="@+id/icoperson5" />
 
-    <Button
+    <ImageButton
         android:id="@+id/low_button5"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -301,7 +290,7 @@
         app:layout_constraintStart_toEndOf="@+id/person5"
         app:layout_constraintTop_toTopOf="@+id/person5" />
 
-    <Button
+    <ImageButton
         android:id="@+id/mid_button5"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -309,7 +298,7 @@
         app:layout_constraintStart_toEndOf="@+id/low_button5"
         app:layout_constraintTop_toTopOf="@+id/person5" />
 
-    <Button
+    <ImageButton
         android:id="@+id/high_button5"
         android:layout_width="50dp"
         android:layout_height="43dp"
@@ -341,5 +330,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.755"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:text="개발인원"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/personcount"
+        app:layout_constraintEnd_toStartOf="@+id/personcount"
+        app:layout_constraintTop_toTopOf="@+id/personcount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.ideer.home
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ideer.R
 import com.example.ideer.SelectedData
@@ -14,43 +15,26 @@ class DevLevelChoose : AppCompatActivity() {
     private lateinit var binding: ActivityDevLevelChooseBinding
     private var selectedData: SelectedData? = null
 
-    // 버튼 상태 추적
-    val personButtonStates = mutableMapOf<String, String>()
-
-
+    //여기서 우성원이 한것
+    private var personLevels: HashMap<String, String> = HashMap()
     var intentedTopic:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDevLevelChooseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
-
-        //intent 가져오기
-        intentedTopic=intent.extras!!.getString("topic")
-        //여기까지는 topic만 받아온것임
-
-
-
-
-        // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
-        // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
+//        // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
 //        selectedData = intent.getParcelableExtra("selectedData")
-//
-//        // 선택된 레벨을 변수에 저장
 //
 //        // 선택된 레벨을 변수에 저장
 //        val chosenLevel = "선택된 레벨"
 //
 //        // 선택된 레벨을 SelectedData 객체에 저장
-//
-//        // 선택된 레벨을 SelectedData 객체에 저장
 //        selectedData!!.chosenLevel = chosenLevel
 
 
-        val topic = intent.getStringExtra("topic") // Get the topic string from the Intent
-
+        //intent 가져오기
+        intentedTopic=intent.extras!!.getString("topic")
 
         val buttonSets = listOf(
                 listOf(R.id.low_button1, R.id.mid_button1, R.id.high_button1),
@@ -59,54 +43,63 @@ class DevLevelChoose : AppCompatActivity() {
                 listOf(R.id.low_button4, R.id.mid_button4, R.id.high_button4),
                 listOf(R.id.low_button5, R.id.mid_button5, R.id.high_button5)
         )
+//        binding.startBackBtnDevLevel.setOnClickListener {
+//            val intent = Intent(this, ChooseTopicActivity::class.java)
+//            startActivity(intent)
+//        }
         binding.startBackBtnDevLevel.setOnClickListener {
-            val intent = Intent(this, ChooseTopicActivity::class.java)
-            startActivity(intent)
-        }
+            super.finish()
+        }//뒤로가기는 intent보단 끝내기로 하는게 좋음 ㅎㅎ,안그러면 새로운 엑티비티가 실행되면서
+        //기존 엑티비티로 가는게 아닌 새롭게 시작됨
+
         binding.arrowMoveForwardDevLevel.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
+            intent.putExtra("topic",intentedTopic)
+            intent.putExtra("personLevels", personLevels)
 
-            intent.putExtra("choosentopic",intentedTopic)
-
-            intent.putExtra("person1",binding.person1.text)
-            intent.putExtra("person2",binding.person2.text)
-            intent.putExtra("person3",binding.person3.text)
-            intent.putExtra("person4",binding.person4.text)
-            intent.putExtra("person5",binding.person5.text)
-
-            // 각 person의 버튼 상태를 intent에 추가
-            for ((person, buttonState) in personButtonStates) {
-                intent.putExtra("${person}ButtonState", buttonState)
+            val personCount = binding.personcount.text.toString().toInt()
+            for (i in 1..personCount) {
+                val personRole = when (i) {
+                    1 -> binding.person1.text.toString()
+                    2 -> binding.person2.text.toString()
+                    3 -> binding.person3.text.toString()
+                    4 -> binding.person4.text.toString()
+                    5 -> binding.person5.text.toString()
+                    else -> ""
+                }
+                intent.putExtra("person${i}role", personRole)
             }
-            //이제 다음화면에서 위 값들을 intent로 받아서 객체생성하면됨
+            intent.putExtra("personcount",personCount)
             startActivity(intent)
-
         }
 
-        //뒤로가기 버튼일땐 intent로 넘기는것보단 그냥 현재 activity를 finsih 하는것 추천ㅎㅎ
-        //왜냐하면 이렇게하면 새로운 엑티비티가 실행되는것이지 이전 엑티비티로 돌아가는것이 아님.엑티비티가 여러 분기로 나뉘어버림
-//        binding.startBackBtnDevLevel.setOnClickListener {
-//            super.finish()
-//        }
-
-
-
-// 각 버튼 세트에 대해
-        for ((personIndex, buttonSet) in buttonSets.withIndex()) {
-            val buttons = buttonSet.map { findViewById<Button>(it) }
+        for (i in 1..buttonSets.size) {
+            val buttons = buttonSets[i-1].map { findViewById<ImageButton>(it) }
             for (button in buttons) {
                 button.setOnClickListener {
+                    // Set the clicked button to the selected state
                     it.isSelected = true
+
+                    // Iterate over the other buttons
                     for (otherButton in buttons - it) {
+                        // Set the other buttons to the unselected state
                         otherButton.isSelected = false
                     }
 
-                    // person의 버튼 상태를 저장
-                    val person = "person${personIndex + 1}"
-                    personButtonStates[person] = it.id.toString()
+                    // Get the level associated with the button
+                    val level = when (button.id) {
+                        R.id.low_button1, R.id.low_button2, R.id.low_button3, R.id.low_button4, R.id.low_button5 -> "Low"
+                        R.id.mid_button1, R.id.mid_button2, R.id.mid_button3, R.id.mid_button4, R.id.mid_button5 -> "Mid"
+                        R.id.high_button1, R.id.high_button2, R.id.high_button3, R.id.high_button4, R.id.high_button5 -> "High"
+                        else -> ""
+                    }
+
+                    // Store the person ID and level in the HashMap
+                    personLevels[i.toString()] = level
                 }
             }
         }
+
 
 
     }
