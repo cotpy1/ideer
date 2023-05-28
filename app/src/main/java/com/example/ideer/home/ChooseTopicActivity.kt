@@ -18,8 +18,8 @@ class ChooseTopicActivity : AppCompatActivity() {
     private var arrayList: ArrayList<String>? = null
     private var ChooseTopicAdapters: ChooseTopicAdapter? = null
     private lateinit var binding: ActivityChooseTopicBinding
-    var chosenTopic = "선택된 토픽"
-    var selectedData = SelectedData(chosenTopic, "", "")
+//    var chosenTopic = "선택된 토픽"
+//    var selectedData = SelectedData(chosenTopic, "", "")
 
 
     @SuppressLint("MissingInflatedId")
