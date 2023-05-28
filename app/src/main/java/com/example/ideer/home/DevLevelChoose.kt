@@ -55,10 +55,10 @@ class DevLevelChoose : AppCompatActivity() {
         //기존 엑티비티로 가는게 아닌 새롭게 시작됨
 
         binding.arrowMoveForwardDevLevel.setOnClickListener {
-            if (intendedTopic.isNullOrEmpty() || personLevels.isNullOrEmpty()) {
+            if (intendedTopic.isNullOrEmpty()) {
                 val alertDialog = AlertDialog.Builder(this).apply {
                     setTitle("Missing Information")
-                    setMessage("모든 정보를 채워주세요")
+                    setMessage("주제를 선택해주세요")
                     setPositiveButton("OK") { _, _ -> }
                 }.create()
 
@@ -68,7 +68,7 @@ class DevLevelChoose : AppCompatActivity() {
                 if (personCountStr.isEmpty()) {
                     val alertDialog = AlertDialog.Builder(this).apply {
                         setTitle("Missing Information")
-                        setMessage("모든 정보를 채워주세요")
+                        setMessage("인원 수를 입력해주세요")
                         setPositiveButton("OK") { _, _ -> }
                     }.create()
 
@@ -77,6 +77,40 @@ class DevLevelChoose : AppCompatActivity() {
                 }
 
                 val personCount = personCountStr.toInt()
+
+                for (i in 1..personCount) {
+                    if (!personLevels.containsKey(i.toString())) {
+                        val alertDialog = AlertDialog.Builder(this).apply {
+                            setTitle("Missing Information")
+                            setMessage("개발 인원 {$i}의 레벨을 선택해주세요")
+                            setPositiveButton("OK") { _, _ -> }
+                        }.create()
+
+                        alertDialog.show()
+                        return@setOnClickListener
+                    }
+
+                    val personRole = when (i) {
+                        1 -> binding.person1.text.toString()
+                        2 -> binding.person2.text.toString()
+                        3 -> binding.person3.text.toString()
+                        4 -> binding.person4.text.toString()
+                        5 -> binding.person5.text.toString()
+                        else -> ""
+                    }
+
+                    if (personRole.isEmpty()) {
+                        val alertDialog = AlertDialog.Builder(this).apply {
+                            setTitle("Missing Information")
+                            setMessage("개발 인원 {$i}의 역할을 입력해주세요")
+                            setPositiveButton("OK") { _, _ -> }
+                        }.create()
+
+                        alertDialog.show()
+                        return@setOnClickListener
+                    }
+                }
+
                 val intent = Intent(this, QuestionActivity::class.java)
                 intent.putExtra("topic", intendedTopic)
                 intent.putExtra("personLevels", personLevels)
@@ -91,17 +125,6 @@ class DevLevelChoose : AppCompatActivity() {
                         else -> ""
                     }
 
-                    if (personRole.isEmpty()) {
-                        val alertDialog = AlertDialog.Builder(this).apply {
-                            setTitle("Missing Information")
-                            setMessage("개발 인원 {$i}에 대한 정보를 채워주세요")
-                            setPositiveButton("OK") { _, _ -> }
-                        }.create()
-
-                        alertDialog.show()
-                        return@setOnClickListener
-                    }
-
                     intent.putExtra("person${i}role", personRole)
                 }
 
@@ -109,6 +132,7 @@ class DevLevelChoose : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
 
         for (i in 1..buttonSets.size) {
             val buttons = buttonSets[i-1].map { findViewById<ImageButton>(it) }
