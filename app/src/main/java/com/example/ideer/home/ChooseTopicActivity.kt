@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ideer.R
-import com.example.ideer.SelectedData
 import com.example.ideer.databinding.ActivityChooseTopicBinding
 
 
@@ -18,8 +17,6 @@ class ChooseTopicActivity : AppCompatActivity() {
     private var arrayList: ArrayList<String>? = null
     private var ChooseTopicAdapters: ChooseTopicAdapter? = null
     private lateinit var binding: ActivityChooseTopicBinding
-//    var chosenTopic = "선택된 토픽"
-//    var selectedData = SelectedData(chosenTopic, "", "")
 
 
     @SuppressLint("MissingInflatedId")
@@ -44,8 +41,6 @@ class ChooseTopicActivity : AppCompatActivity() {
             val intent = Intent(this, DevLevelChoose::class.java)
             startActivity(intent)
         }
-
-
 
         // Populate the arrayList with dummy data
         val dummyData = listOf("건강 · 운동","게임","교육","데이트","생산성","비지니스","여행·지역정보","음악·오디오","사진","식음료","직접 입력","랜덤")

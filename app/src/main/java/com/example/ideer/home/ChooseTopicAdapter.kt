@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ideer.R
+import com.example.ideer.chat.ChatActivity
 
 class ChooseTopicAdapter(private val context: Context, private val arrayList: ArrayList<String>):
         RecyclerView.Adapter<ChooseTopicAdapter.ItemHolder>() {
@@ -38,8 +39,6 @@ class ChooseTopicAdapter(private val context: Context, private val arrayList: Ar
             val intent = Intent(it.context, DevLevelChoose::class.java)
             intent.putExtra("topic", arrayList[position])
             it.context.startActivity(intent)
-            //여기서 arraylist에 해당하는 주제를 알아서 보냄 position을 인덱스로
-            //key값은 topic
         }
 
     }
