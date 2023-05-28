@@ -1,8 +1,11 @@
 package com.example.ideer.home
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,12 +40,20 @@ class ChooseTopicActivity : AppCompatActivity() {
         ChooseTopicAdapters = ChooseTopicAdapter(applicationContext, arrayList!!)
         recyclerView?.adapter = ChooseTopicAdapters
         binding.startBackBtnTopic.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            super.finish()
         }
         binding.arrowMoveForwardTopic.setOnClickListener {
-            val intent = Intent(this, DevLevelChoose::class.java)
-            startActivity(intent)
+            val activity = it.context as? Activity
+            if (activity?.isFinishing == false) {
+                val alertDialog = AlertDialog.Builder(activity).apply {
+                    setTitle("주제를 선택해주세요")
+                    setPositiveButton("네") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                }.create()
+
+                alertDialog.show()
+            }
         }
 
 
