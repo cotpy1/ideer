@@ -46,8 +46,8 @@
 
         <ImageButton
             android:id="@+id/start_menu_btn"
-            android:layout_width="38dp"
-            android:layout_height="15dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="320dp"
             android:background="@color/my_primary"

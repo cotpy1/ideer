@@ -11,15 +11,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ideer.R;
 import com.example.ideer.databinding.ActivityChatBinding;
+import com.example.ideer.home.MainActivity;
 import com.example.ideer.main.main;
-import com.example.ideer.scrap.fragment_scrap;
+import com.example.ideer.scrap.ScrapFragment;
+import com.example.ideer.scrap.ScrapItem;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private List<Message> messageList;
     private MessageAdapter messageAdapter;
-    fragment_scrap fragment_scrap = new fragment_scrap();
+    ScrapFragment fragment_scrap = new ScrapFragment();
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private OkHttpClient client = new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS).build();
     private ChatViewModel chatViewModel;
@@ -73,7 +74,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        fragment_scrap = new ScrapFragment();
         db = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
         if (intent != null) {
@@ -153,7 +154,6 @@ public class ChatActivity extends AppCompatActivity {
                 " 5.\n" +
                 " 6.\n" +
                 " 7.";
-        addToChat(question, Message.SENT_BY_ME);
         callAPI(question);
     }
 
@@ -205,12 +205,23 @@ public class ChatActivity extends AppCompatActivity {
                     return true;
                 } else if (id == R.id.scrap) {
                     // 채팅 대화 스크랩하는 작업 수행
-                    scrapChatConversation();
+                    String conversation = convertChatConversationToText();
+                    ScrapItem scrapItem = new ScrapItem(conversation);
+                    fragment_scrap.addScrapItem(scrapItem);
+
+                    Toast.makeText(getApplicationContext(), "스크랩되었습니다.", Toast.LENGTH_SHORT).show();
+
+
+                    // 메인 페이지로 이동하는 로직 추가
+                    Intent intent = new Intent(ChatActivity.this, main.class);
+                    startActivity(intent);
+                    finish(); // 현재 액티비티 종료
+
                     return true;
+
                 } else if (id == R.id.refresh) {
                     // 채팅 대화 내용을 갱신하는 작업 수행
                     String question = getCurrentQuestion();
-                    addToChat(question, Message.SENT_BY_ME);
                     callAPI(question);
                     return true;
                 } else if (id == R.id.difficulty_down) {
@@ -243,45 +254,13 @@ public class ChatActivity extends AppCompatActivity {
     private void requestHigherDifficultyQuestion() {
         String question = getCurrentQuestion(); // 이전 질문 가져오기
         String newQuestion = " 더 어려운"+question;
-        addToChat(newQuestion, Message.SENT_BY_ME); // 새로운 질문을 대화에 추가
         callAPI(newQuestion); // 새로운 질문에 대한 API 호출
     }
     private void requestLowerDifficultyQuestion() {
         String question = getCurrentQuestion(); // 이전 질문 가져오기
         String newQuestion = "더 쉬운"+question;
-        addToChat(newQuestion, Message.SENT_BY_ME); // 새로운 질문을 대화에 추가
         callAPI(newQuestion); // 새로운 질문에 대한 API 호출
     }
-
-
-
-    private void scrapChatConversation() {
-        String conversationText = convertChatConversationToText();
-
-        // Firestore에 대화 내용 저장
-        Map<String, Object> data = new HashMap<>();
-        data.put("conversationText", conversationText);
-        db.collection("users").document("my_uid").collection("my_scraps")
-                .add(data)
-                .addOnSuccessListener(documentReference -> {
-                    String scrapId = documentReference.getId();
-                    Fragment fragment = new fragment_scrap();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("scrapId", scrapId);
-                    fragment.setArguments(bundle);
-
-                    //프래그먼트 호출 및 전환
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(android.R.id.content, fragment);
-                    fragmentTransaction.commit();
-                })
-                .addOnFailureListener(e -> {
-                    showToast("스크랩에 실패했습니다.");
-                });
-    }
-
-
-
 
 
 
@@ -335,7 +314,6 @@ public class ChatActivity extends AppCompatActivity {
     void callAPI(String question) {
         previousQuestion = question;
 
-
         // okhttp
         messageList.add(new Message("입력중..", Message.SENT_BY_BOT));
 
@@ -350,13 +328,13 @@ public class ChatActivity extends AppCompatActivity {
 
             jsonBody.put("messages", messageArr);
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
-                .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization", "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")
+                .url("\n"+"https://api.openai.com/v1/chat/completions")
+                .header("Authorization", "Bearer your api key")
                 .post(body)
                 .build();
 

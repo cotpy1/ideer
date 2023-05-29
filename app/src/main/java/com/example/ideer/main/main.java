@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ideer.R;
 import com.example.ideer.memo.fragment_memo;
-import com.example.ideer.scrap.fragment_scrap;
+import com.example.ideer.scrap.ScrapFragment;
+import com.example.ideer.scrap.ScrapFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class main extends AppCompatActivity {
 
-    fragment_scrap fragment1;
+    ScrapFragment fragment1;
     fragment_memo fragment2;
 
 
@@ -22,7 +23,7 @@ public class main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatmemo_act);
 
-        fragment1 = new fragment_scrap();
+        fragment1 = new ScrapFragment();
         fragment2 = new fragment_memo();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment1).commit();

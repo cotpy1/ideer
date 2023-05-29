@@ -1,8 +1,11 @@
 package com.example.ideer.home
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,20 +30,30 @@ class ChooseTopicActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.ChooseTopicrecyclerGridView)
         gridLayoutManager = GridLayoutManager(applicationContext, 3,
-                LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager.VERTICAL, false)
         recyclerView?.layoutManager = gridLayoutManager
         recyclerView?.setHasFixedSize(true)
         arrayList = ArrayList()
         ChooseTopicAdapters = ChooseTopicAdapter(applicationContext, arrayList!!)
         recyclerView?.adapter = ChooseTopicAdapters
         binding.startBackBtnTopic.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            super.finish()
         }
         binding.arrowMoveForwardTopic.setOnClickListener {
-            val intent = Intent(this, DevLevelChoose::class.java)
-            startActivity(intent)
+            val activity = it.context as? Activity
+            if (activity?.isFinishing == false) {
+                val alertDialog = AlertDialog.Builder(activity).apply {
+                    setTitle("주제를 선택해주세요")
+                    setPositiveButton("네") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                }.create()
+
+                alertDialog.show()
+            }
         }
+
+
 
         // Populate the arrayList with dummy data
         val dummyData = listOf("건강 · 운동","게임","교육","데이트","생산성","비지니스","여행·지역정보","음악·오디오","사진","식음료","직접 입력","랜덤")
