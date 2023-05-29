@@ -7,7 +7,6 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ideer.R
-import com.example.ideer.SelectedData
 import com.example.ideer.databinding.ActivityDevLevelChooseBinding
 import com.example.ideer.questionlist.QuestionActivity
 import java.sql.Types.NULL
@@ -15,7 +14,6 @@ import java.sql.Types.NULL
 
 class DevLevelChoose : AppCompatActivity() {
     private lateinit var binding: ActivityDevLevelChooseBinding
-    private var selectedData: SelectedData? = null
 
     //여기서 우성원이 한것
     private var personLevels: HashMap<String, String> = HashMap()
@@ -25,30 +23,18 @@ class DevLevelChoose : AppCompatActivity() {
         binding = ActivityDevLevelChooseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        // 이전 Activity에서 전달된 SelectedData 객체를 가져옴
-//        selectedData = intent.getParcelableExtra("selectedData")
-//
-//        // 선택된 레벨을 변수에 저장
-//        val chosenLevel = "선택된 레벨"
-//
-//        // 선택된 레벨을 SelectedData 객체에 저장
-//        selectedData!!.chosenLevel = chosenLevel
-
 
         //intent 가져오기
         intendedTopic=intent.extras!!.getString("topic")
 
         val buttonSets = listOf(
-                listOf(R.id.low_button1, R.id.mid_button1, R.id.high_button1),
-                listOf(R.id.low_button2, R.id.mid_button2, R.id.high_button2),
-                listOf(R.id.low_button3, R.id.mid_button3, R.id.high_button3),
-                listOf(R.id.low_button4, R.id.mid_button4, R.id.high_button4),
-                listOf(R.id.low_button5, R.id.mid_button5, R.id.high_button5)
+            listOf(R.id.low_button1, R.id.mid_button1, R.id.high_button1),
+            listOf(R.id.low_button2, R.id.mid_button2, R.id.high_button2),
+            listOf(R.id.low_button3, R.id.mid_button3, R.id.high_button3),
+            listOf(R.id.low_button4, R.id.mid_button4, R.id.high_button4),
+            listOf(R.id.low_button5, R.id.mid_button5, R.id.high_button5)
         )
-//        binding.startBackBtnDevLevel.setOnClickListener {
-//            val intent = Intent(this, ChooseTopicActivity::class.java)
-//            startActivity(intent)
-//        }
+
         binding.startBackBtnDevLevel.setOnClickListener {
             super.finish()
         }//뒤로가기는 intent보단 끝내기로 하는게 좋음 ㅎㅎ,안그러면 새로운 엑티비티가 실행되면서

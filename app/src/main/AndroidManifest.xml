@@ -26,8 +26,6 @@
             android:exported="false"/>
         <activity android:name=".questionlist.QuestionActivity"
             android:exported="false"/>
-        <activity android:name=".scrap.ScrapDetailsActivity"
-            android:exported="false"/>
         <activity android:name=".home.MainActivity"
             android:exported="false"/>
         <activity android:name=".home.DevLevelChoose"

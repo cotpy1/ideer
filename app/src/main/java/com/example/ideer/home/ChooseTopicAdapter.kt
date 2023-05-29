@@ -20,7 +20,7 @@ import kotlin.random.Random
 import kotlin.collections.ArrayList
 
 class ChooseTopicAdapter(private val context: Context, private val arrayList: ArrayList<String>):
-        RecyclerView.Adapter<ChooseTopicAdapter.ItemHolder>() {
+    RecyclerView.Adapter<ChooseTopicAdapter.ItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val itemHolder = LayoutInflater.from(parent.context).inflate(R.layout.list_choose_topic, parent, false)

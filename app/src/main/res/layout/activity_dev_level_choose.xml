@@ -59,6 +59,7 @@
             app:layout_constraintEnd_toEndOf="@id/vibe_post_top_bar_layout"
             app:layout_constraintTop_toTopOf="@id/vibe_post_top_bar_layout" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Number of developers selection -->
@@ -342,6 +343,70 @@
         app:layout_constraintBottom_toBottomOf="@+id/personcount"
         app:layout_constraintEnd_toStartOf="@+id/personcount"
         app:layout_constraintTop_toTopOf="@+id/personcount" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="361dp"
+        android:layout_height="198dp"
+        android:background="@drawable/rectangle_ivory"
+        android:backgroundTint="#FAEDCD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.939" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="입문자: 개발 경험이 거의 없음"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.248" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="※ 수준 입력 방법"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.079" />
+
+    <TextView
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="초보자: 기초적인 언어와 도구를 사용하여 간단한 프로그램을 작성, 디버깅 가능 "
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <TextView
+        android:layout_width="319dp"
+        android:layout_height="45dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="중급자: 여러 프로그래밍 언어와 도구를 사용하여 소프트웨어 개발가능"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.784" />
 
     <ImageView
         android:id="@+id/imageView"
