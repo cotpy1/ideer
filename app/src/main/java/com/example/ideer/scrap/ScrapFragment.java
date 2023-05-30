@@ -1,86 +1,59 @@
 package com.example.ideer.scrap;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ideer.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.ideer.databinding.FragmentMemoBinding;
+import com.example.ideer.databinding.FragmentScrapBinding;
+import com.example.ideer.memo.Note;
+import com.example.ideer.memo.NoteAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.Query;
+import com.example.ideer.memo.NoteDetailsActivity;
 
 public class ScrapFragment extends Fragment {
-    private List<ScrapItem> scrapItemList;
-    private ScrapAdapter adapter;
 
+    private FragmentScrapBinding binding;
+    ScrapAdapter scrapAdapter;
+    @Nullable
+    @Override
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancesState){
+        binding = FragmentScrapBinding.inflate(inflater, container, false);// noteAdapter 초기화 메서드 호출
+        setupRecyclerView();
+
+        return binding.getRoot();
+    }
+
+
+
+    void setupRecyclerView() {
+        Query query = ScrapDetailsActivity.getCollectionReferenceForScraps().orderBy("timestamp", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Scrap> options = new FirestoreRecyclerOptions.Builder<Scrap>().setQuery(query,Scrap.class).build();
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        scrapAdapter = new ScrapAdapter(options,requireContext());
+        binding.recyclerView.setAdapter(scrapAdapter);
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        scrapAdapter.startListening();
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        scrapAdapter.stopListening();
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scrap, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-
-        scrapItemList = new ArrayList<>();  // 스크랩한 아이템 목록을 담을 리스트
-
-
-        List<ScrapItem> savedItems = loadScrapItemsFromStorage();
-        scrapItemList.addAll(savedItems);
-
-        adapter = new ScrapAdapter(scrapItemList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-
-        return view;
+    public void onResume() {
+        super.onResume();
+        scrapAdapter.notifyDataSetChanged();
     }
-
-    private List<ScrapItem> loadScrapItemsFromStorage() {
-        List<ScrapItem> scrapItems = new ArrayList<>();
-
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("scrap_data", Context.MODE_PRIVATE);
-        int itemCount = sharedPreferences.getInt("item_count", 0);
-
-        for (int i = 0; i < itemCount; i++) {
-            String answer = sharedPreferences.getString("answer_" + i, "");
-
-            if (!answer.isEmpty()) {
-                ScrapItem scrapItem = new ScrapItem(answer);
-                scrapItems.add(scrapItem);
-            }
-        }
-
-        return scrapItems;
-    }
-
-
-    // 스크랩한 답변을 추가하는 메서드
-    public void addScrapItem(ScrapItem item) {
-        scrapItemList.add(item);
-        adapter.notifyDataSetChanged();
-        saveScrapItemsToStorage(scrapItemList); // 스크랩한 아이템을 저장
-    }
-    private void saveScrapItemsToStorage(List<ScrapItem> scrapItems) {
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("scrap_data", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putInt("item_count", scrapItems.size());
-
-        for (int i = 0; i < scrapItems.size(); i++) {
-            ScrapItem scrapItem = scrapItems.get(i);
-
-            editor.putString("answer_" + i, scrapItem.getAnswer());
-        }
-
-        editor.apply();
-    }
-
-    // ...
 }
-
-

@@ -11,51 +11,46 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ideer.R;
+import com.example.ideer.memo.NoteDetailsActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.util.List;
 
+public class ScrapAdapter extends FirestoreRecyclerAdapter<Scrap, ScrapAdapter.ScrapViewHolder> {
+    Context context;
+    public ScrapAdapter(@NonNull FirestoreRecyclerOptions<Scrap> options, Context context) {
+        super(options);
+        this.context = context;
+    }
 
-public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ScrapViewHolder> {
-    private List<ScrapItem> scrapItemList;
+    @Override
+    protected void onBindViewHolder(@NonNull ScrapViewHolder holder, int position, @NonNull Scrap scrap) {
+        holder.contentTextView.setText(scrap.content);
+        holder.timestampTextView.setText(ScrapDetailsActivity.timestampToString(scrap.timestamp));
 
-    public ScrapAdapter(List<ScrapItem> scrapItemList) {
-        this.scrapItemList = scrapItemList;
+        holder.itemView.setOnClickListener((v)->{
+            Intent intent = new Intent(context,NoteDetailsActivity.class);
+            intent.putExtra("content",scrap.content);
+            String docId = this.getSnapshots().getSnapshot(position).getId();
+            intent.putExtra("docId",docId);
+            context.startActivity(intent);
+        });
     }
 
     @NonNull
     @Override
     public ScrapViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_scrap, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_scrap,parent,false);
         return new ScrapViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ScrapViewHolder holder, int position) {
-        ScrapItem scrapItem = scrapItemList.get(position);
-        holder.bind(scrapItem);
-    }
-
-    @Override
-    public int getItemCount() {
-        return scrapItemList.size();
-    }
-
-    public class ScrapViewHolder extends RecyclerView.ViewHolder {
-        private TextView questionText;
-        private TextView answerText;
-
+    class ScrapViewHolder extends RecyclerView.ViewHolder{
+        TextView contentTextView,timestampTextView;
         public ScrapViewHolder(@NonNull View itemView) {
             super(itemView);
-            answerText = itemView.findViewById(R.id.content_scrap_view);
-        }
+            contentTextView = itemView.findViewById(R.id.scrap_content_view);
+            timestampTextView = itemView.findViewById(R.id.scrap_timestamp_text_view);
 
-        public void bind(ScrapItem scrapItem) {
-            answerText.setText(scrapItem.getAnswer());
         }
     }
 }
-
-
-

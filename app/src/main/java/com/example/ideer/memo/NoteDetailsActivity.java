@@ -49,7 +49,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         titleEditText.setText(title);
         contentEditText.setText(content);
         if(isEditMode){
-            pageTitleTextView.setText("노트를 수정하세요");
+            pageTitleTextView.setText("수정(메모장에 저장)");
             deleteNoteTextViewBtn.setVisibility(View.VISIBLE);
         }
 

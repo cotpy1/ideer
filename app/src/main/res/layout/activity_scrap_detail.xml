@@ -25,6 +25,15 @@
         android:backgroundTint="@color/white"
         android:background="@drawable/rounded_corner"
         >
+        <ImageButton
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/save_scrap_btn"
+            android:src="@drawable/baseline_done_24"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:tint="@color/black"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -39,12 +48,13 @@
             android:textColor="@color/black"/>
 
 
+
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/delete_scrap_text_view_btn"
-        android:text="메모 삭제"
+        android:text="스크랩 삭제"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:textColor="#FF0000"

@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.ideer.R;
 import com.example.ideer.databinding.ActivityChatBinding;
-import com.example.ideer.home.MainActivity;
 import com.example.ideer.main.main;
+import com.example.ideer.scrap.ScrapDetailsActivity;
 import com.example.ideer.scrap.ScrapFragment;
-import com.example.ideer.scrap.ScrapItem;
+import com.example.ideer.scrap.Scrap;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -28,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,8 +51,10 @@ public class ChatActivity extends AppCompatActivity {
     private ChatViewModel chatViewModel;
     private StringBuilder chatContext = new StringBuilder();
     private List<String> selectedQuestions;
+    private String gptResponse;
     private String intentedTopic;
     private TextView selectedCountText;
+    private  ScrapFragment scrapFragment;
     private Map<String, String> personLevels;
     private String person1Role;
     private String person2Role;
@@ -74,7 +75,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        fragment_scrap = new ScrapFragment();
+        scrapFragment = new ScrapFragment();
         db = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
         if (intent != null) {
@@ -205,10 +206,7 @@ public class ChatActivity extends AppCompatActivity {
                     return true;
                 } else if (id == R.id.scrap) {
                     // 채팅 대화 스크랩하는 작업 수행
-                    String conversation = convertChatConversationToText();
-                    ScrapItem scrapItem = new ScrapItem(conversation);
-                    fragment_scrap.addScrapItem(scrapItem);
-
+                    onScrap(gptResponse);
                     Toast.makeText(getApplicationContext(), "스크랩되었습니다.", Toast.LENGTH_SHORT).show();
 
 
@@ -250,6 +248,12 @@ public class ChatActivity extends AppCompatActivity {
 
         popupMenu.show();
     }
+    private void onScrap(String response){
+        Intent intent = new Intent(ChatActivity.this, ScrapDetailsActivity.class);
+        intent.putExtra("gptresponse",gptResponse);
+        startActivity(intent);
+        showToast("스크랩하였습니다");
+    }
 
     private void requestHigherDifficultyQuestion() {
         String question = getCurrentQuestion(); // 이전 질문 가져오기
@@ -264,30 +268,11 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+    // 스크랩 버튼 클릭 시 호출되는 메서드
+
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-    private String convertChatConversationToText() {
-        StringBuilder textBuilder = new StringBuilder();
-
-        for (int i = 0; i < messageList.size(); i++) {
-            Message message = messageList.get(i);
-            String sender = message.getSentBy();
-            String content = message.getMessage();
-
-            textBuilder
-                    .append(sender).append(": ").append(content).append("\n");
-        }
-
-        return textBuilder.toString();
-    }
-
-
-
-
-
-
 
     private void addToChat(String message, String sentBy) {
         runOnUiThread(new Runnable() {
@@ -300,15 +285,10 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-
     void addResponse(String response){
         messageList.remove(messageList.size()-1);
         addToChat(response,Message.SENT_BY_BOT);
+        gptResponse = response;
     }
 
     void callAPI(String question) {
@@ -334,7 +314,7 @@ public class ChatActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
                 .url("\n"+"https://api.openai.com/v1/chat/completions")
-                .header("Authorization", "Bearer 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")
+                .header("Authorization", "Bearer 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")
                 .post(body)
                 .build();
 
